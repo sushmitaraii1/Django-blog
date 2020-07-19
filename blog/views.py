@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (ListView, DetailView,
-                                  CreateView, UpdateView,DeleteView)
+                                  CreateView, UpdateView, DeleteView)
 
 from .models import Post
 
@@ -12,9 +12,8 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request,'blog/landing.html')
+    return render(request, 'blog/landing.html')
 
-# or
 
 class PostListView(ListView):
     model = Post
@@ -37,7 +36,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['title', 'content']
 
@@ -52,7 +51,7 @@ class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
         return False
 
 
-class PostDeleteView(DeleteView,LoginRequiredMixin,UserPassesTestMixin):
+class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
     model = Post
     template_name = 'blog/post_confirm_delete.html'
     success_url = '/blog'
